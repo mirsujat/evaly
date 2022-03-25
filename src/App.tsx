@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import './App.css';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <h1>Helow From React Typescript</h1>
+      <h1>Hello From React Typescript</h1>
     </div>
   );
 }

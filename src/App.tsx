@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 
 //Components
 import Item from "./Components/Item/Item";
+import Cart from "./Components/Cart/Cart";
 import { Drawer, Badge, LinearProgress } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -39,9 +40,39 @@ const App = () => {
   const getTotalItems = (items: CartItemType[]) =>
   items.reduce((ack:number, item) => ack + item.amount, 0);
 
-  const handleAddToCart = (clickedItem: CartItemType) => null;
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems(prev => {
+      //1. Is item already in the cart
+      const isItemInCart = prev.find(item => item.id === clickedItem.id );
+
+      if(isItemInCart){
+        return prev.map( item => 
+          item.id === clickedItem.id 
+          ? {...item, amount: item.amount + 1 }
+          : item
+          );
+      }
+
+      //First time the item is added
+      return[ ...prev, { ...clickedItem, amount: 1 } ]
+
+    })
+  };
   
-  const handleRemoveFromCart = () => null;
+  const handleRemoveFromCart = (id: number) =>{
+    setCartItems(prev =>(
+      prev.reduce((ack, item) =>{
+        if(item.id === id){
+          //remove item from cart if item.amount === 1
+          if(item.amount === 1) return ack;
+          return [ ...ack, { ...item, amount: item.amount - 1 } ];
+        }else{
+          return [  ...ack, item ];
+        }
+
+      }, [] as CartItemType[])
+    ))
+  };
 
   if(isLoading) return <LinearProgress />;
   if(error) return <div>Something went wrong... </div>;
@@ -49,7 +80,7 @@ const App = () => {
   let content = null;
   if(data){
     content = data.map(item => (
-            <Grid item key={item.id} xs={12} sm={4}> 
+            <Grid item key={item.id} xs={12} sm={3}> 
               <Item item={item} handleAddToCart={handleAddToCart} />
             </Grid>
         ))
@@ -59,7 +90,11 @@ const App = () => {
     <Wrapper>
 
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
-        Cart goes here
+        <Cart 
+        cartItems={cartItems} 
+        addToCart={handleAddToCart}
+        removeFromCart={handleRemoveFromCart}
+        />
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
         <Badge badgeContent={getTotalItems(cartItems)} color="error">

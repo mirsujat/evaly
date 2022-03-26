@@ -10,13 +10,21 @@ type Props = {
     handleAddToCart: (clickedItem: CartItemType) => void;
 }
 
+const truncateString = (str: string, n: number) => {
+  if (str.length > n) {
+    return str.substring(0, n) + "...";
+  } else {
+    return str;
+  }
+}
+
 const Item: React.FC<Props> = ({item, handleAddToCart}) =>(
     <Wrapper>
         <img src={item.image} alt={item.title} />
         <div>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            <h3>$ {item.price}</h3>
+            <h4 className="title">{item.title}</h4>
+            <p className="trancate">{ truncateString(item.description, 100) }</p>
+            <h4 className="price">$ {item.price}</h4>
         </div>
         <Button onClick={() => handleAddToCart(item)}>Add To Cart</Button>
     </Wrapper>

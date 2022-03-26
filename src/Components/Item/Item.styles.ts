@@ -14,6 +14,7 @@ export const Wrapper = styled.div`
         border-radius: 0 0 20px 20px;
     }
     img{
+        min-height: 250px;
         max-height: 250px;
         object-fit: cover;
         border-radius: 20px 20px 0 0;
@@ -22,6 +23,18 @@ export const Wrapper = styled.div`
         font-family: Arial, Helvetica, sans-serif;
         padding: 1rem;
         height: 100%;
+    }
+    .title{
+        width: 250px;
+        height: 80px;
+        
+    }
+    .trancate{
+        width: 250px;
+        height: 80px;
+        text-align: justify;
+        text-justify: inter-word;
+
 
     }
 `;

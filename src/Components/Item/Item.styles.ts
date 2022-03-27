@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
     flex-direction: column;
     width; 100%;
     border: 1px solid lightblue;
-    border-radius: 20px;
+    border-radius: 3px;
     height: 100%;
 
 
@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
     img{
         min-height: 250px;
         max-height: 250px;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 20px 20px 0 0;
     }
     div{
@@ -25,9 +25,14 @@ export const Wrapper = styled.div`
         height: 100%;
     }
     .title{
-        width: 250px;
         height: 80px;
+        color: rgba(0, 0, 0, 0.8);
         
+    }
+    .price{
+        padding 6px 0;
+        color: rgba(0, 0, 0, 0.7);
+        margin: 5px 0;
     }
     .trancate{
         width: 250px;

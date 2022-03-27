@@ -10,7 +10,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 //Styles
 import { Wrapper, StyledButton } from "./App.styles";
-import StyledEngine from "@mui/styled-engine";
+
 
 
 //Types
@@ -87,7 +87,7 @@ const App = () => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper data-testid="app-wrapper">
 
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart 

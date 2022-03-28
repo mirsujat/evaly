@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import "@testing-library/jest-dom/extend-expect"
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import "@testing-library/jest-dom/extend-expect";
 import App from './App';
 
 test('renders app component', () => {
@@ -9,3 +10,7 @@ test('renders app component', () => {
   
   expect(appWrapper).toBeInTheDocument();
 });
+function expect(appWrapper: any) {
+  throw new Error('Function not implemented.');
+}
+

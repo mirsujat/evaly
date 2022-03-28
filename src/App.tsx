@@ -74,7 +74,7 @@ const App = () => {
     ))
   };
 
-  if(isLoading) return <LinearProgress />;
+  if(isLoading) return <LinearProgress data-testid="loading"/>;
   if(error) return <div>Something went wrong... </div>;
 
   let content = null;
@@ -102,7 +102,7 @@ const App = () => {
         </Badge>
       </StyledButton>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} data-testid="content" >
         { content }
       </Grid>
     </Wrapper>

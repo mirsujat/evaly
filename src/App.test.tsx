@@ -4,13 +4,21 @@ import '@testing-library/jest-dom';
 import "@testing-library/jest-dom/extend-expect";
 import App from './App';
 
+
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const client = new QueryClient();
+
 test('renders app component', () => {
-  const { getByTestId } = render(<App />);
-  const appWrapper = getByTestId("app-wrapper");
+  const { queryByTestId  } = render(
+    <QueryClientProvider client={client}>
+      <App />
+    </QueryClientProvider>
+ 
+  );
+  const loading = queryByTestId("loading");
+  const content = queryByTestId("content");
+  expect(loading).toBeInTheDocument();
   
-  expect(appWrapper).toBeInTheDocument();
 });
-function expect(appWrapper: any) {
-  throw new Error('Function not implemented.');
-}
 

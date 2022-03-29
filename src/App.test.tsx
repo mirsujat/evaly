@@ -1,6 +1,6 @@
 import React from 'react';
-import {rest} from 'msw'
-import {setupServer} from 'msw/node'
+import {rest} from 'msw';
+import {setupServer} from 'msw/node';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -10,11 +10,18 @@ import App from './App';
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const client = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // ✅ turns retries off
+      retry: false,
+    },
+  },
+})
 
 const server = setupServer(
   rest.get('/https://fakestoreapi.com/products"', (req, res, ctx) => {
-    return res(ctx.json({data: 'hello there'}))
+    return res(ctx.json({'data': 'hello there'}))
   }),
 )
 
@@ -35,13 +42,14 @@ afterAll(() => server.close())
 
   test("render loading", async () => {
       render(
-      <QueryClientProvider client={client}>
+      <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>
     );
-    const content = await screen.queryByTestId('loading');
+    const content = await screen.getByTestId('loading');
     expect(content).toBeInTheDocument();
-  })
+  });
+  
 
 
 

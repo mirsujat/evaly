@@ -3,26 +3,32 @@ import { render, screen, act, waitFor } from '@testing-library/react';
 import App from './App';
 import { useFetchData } from "./Utility/useFetchData";
 
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const client = new QueryClient();
+
+
 
 jest.mock("./Utility/useFetchData", () => ({
   useFetchData: jest.fn(),
 }));
 
 
- describe("render app without error", () =>{
-   beforeEach(() =>{
+ describe("render app without error",  () => {
+   beforeEach(() => {
      useFetchData.mockImplementation(() => ({}));
    });
 
    describe("while loading..", () =>{
      it("render loader", () =>{
        useFetchData.mockImplementation(() =>({
-         isLoading: true
+         isLoading: true,
        }));
 
-       const { getByTestId } = render(<App />);
-       expect( getByTestId("loading") ).toBeTruthy();
-     })
+       const { findByTestId } = render(<App />); 
+
+       expect( findByTestId("loading") ).toBeTruthy();
+     });
    });
 
    describe("with an error..", () =>{

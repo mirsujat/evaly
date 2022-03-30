@@ -25,7 +25,10 @@ jest.mock("./Utility/useFetchData", () => ({
          isLoading: true,
        }));
 
-       const { findByTestId } = render(<App />); 
+       const { findByTestId } = render(
+         <QueryClientProvider client={client}><App /></QueryClientProvider>
+      
+       ); 
 
        expect( findByTestId("loading") ).toBeTruthy();
      });

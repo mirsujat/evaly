@@ -1,12 +1,12 @@
 
 import { render, screen, act, waitFor } from '@testing-library/react';
 import App from './App';
-import { useFetchData } from "./Utility/useFetch";
+import { useFetchData } from "./Utility/useFetchData";
 
 
-jest.mock("./useFetchData", () => ({
+jest.mock("./Utility/useFetchData", () => ({
   useFetchData: jest.fn(),
-}))
+}));
 
 
  describe("render app without error", () =>{
@@ -33,7 +33,7 @@ jest.mock("./useFetchData", () => ({
      it("render with data", () =>{})
    })
 
- })
+ });
   
 
 

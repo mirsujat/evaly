@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { useQuery } from "react-query";
+import { useFetchData } from "./Utility/useFetchData";
 
 //Components
 import Item from "./Components/Item/Item";
@@ -33,7 +34,7 @@ const App = () => {
 
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
-  const {data, isLoading, error} = useQuery<CartItemType[]>("products", getProducts);
+  const {data, isLoading, isError, error} = useFetchData();
 
   const getTotalItems = (items: CartItemType[]) =>
   items.reduce((ack:number, item) => ack + item.amount, 0);
@@ -73,12 +74,12 @@ const App = () => {
   };
 
   if(isLoading) return <LinearProgress data-testid="loading"/>;
-  if(error) return <div>Something went wrong... </div>;
+  if(isError) return <div data-testid="error">Something went wrong... </div>;
 
   let content = null;
   if(data){
     content = data.map(item => (
-            <Grid item key={item.id} xs={12} sm={3}> 
+            <Grid item key={item.id} xs={12} sm={3} data-testid="product"> 
               <Item item={item} handleAddToCart={handleAddToCart} />
             </Grid>
         ))

@@ -40,6 +40,7 @@ jest.mock("./Utility/useFetchData");
       mockUseProduct.mockImplementation(() =>({
          isLoading: true,
        }));
+       
        const { getByTestId } = render( <App />); 
        expect( getByTestId("loading") ).toBeInTheDocument();
      });
@@ -50,6 +51,7 @@ jest.mock("./Utility/useFetchData");
       mockUseProduct.mockImplementation(() =>({
         isError: true
       }));
+
       const { getByTestId } = render( <App />); 
       expect( getByTestId("error") ).toBeInTheDocument();
      });
@@ -62,8 +64,17 @@ jest.mock("./Utility/useFetchData");
       isError: false,
       data: products
     }));
+
     const {queryByTestId} = render( <App />); 
     expect( queryByTestId("product")).toBeInTheDocument();
+    });
+   });
+
+    describe("render shopping cart icon",   () =>{
+     it("render shopping cart icon Correctly", () =>{ 
+       
+    const {getByTestId} = render( <App />); 
+    expect( getByTestId("cart-icon")).toBeInTheDocument();
     });
    });
 

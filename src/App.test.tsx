@@ -63,11 +63,8 @@ jest.mock("./Utility/useFetchData");
       data: products
     }));
     const {queryByTestId} = render( <App />); 
-      
-       expect( queryByTestId("product")).toBeInTheDocument();
-  
+    expect( queryByTestId("product")).toBeInTheDocument();
     });
-    
    });
 
  });

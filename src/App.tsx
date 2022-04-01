@@ -95,7 +95,7 @@ const App = () => {
         removeFromCart={handleRemoveFromCart}
         />
       </Drawer>
-      <StyledButton onClick={() => setCartOpen(true)}>
+      <StyledButton onClick={() => setCartOpen(true)} data-t>
         <Badge badgeContent={getTotalItems(cartItems)} color="error">
           <AddShoppingCartIcon></AddShoppingCartIcon>
         </Badge>

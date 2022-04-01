@@ -2,12 +2,13 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import App from './App';
 import { useFetchData } from "./Utility/useFetchData";
+import { CartItemType } from './App';
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const client = new QueryClient();
 
-const products =[{
+const products:CartItemType =[{
   id: 1,
   category: "products",
   description: "This is description",
@@ -47,7 +48,6 @@ jest.mock("./Utility/useFetchData");
    describe("with an error..", () =>{
      it("render an error component", () =>{
       mockUseProduct.mockImplementation(() =>({
-        isLoading: false,
         isError: true
       }));
       const { getByTestId } = render( <App />); 
@@ -55,16 +55,19 @@ jest.mock("./Utility/useFetchData");
      });
    });
 
-   describe("render with data",  async () =>{
+   describe("render with data",   () =>{
      it("render with data", () =>{ 
        mockUseProduct.mockImplementation(() =>({
       isLoading: false,
       isError: false,
-      data: product
+      data: products
     }));
-     render( <App />); });
-    const product = await waitFor(() => screen.queryByTestId("product"));
-    expect( product ).toBeInTheDocument();
+    const {queryByTestId} = render( <App />); 
+      
+       expect( queryByTestId("product")).toBeInTheDocument();
+  
+    });
+    
    });
 
  });

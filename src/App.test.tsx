@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 const client = new QueryClient();
 
-const products:CartItemType[] =[{
+const products:CartItemType[] = [{
   id: 1,
   category: "products",
   description: "This is description",

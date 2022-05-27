@@ -26,8 +26,8 @@ export type CartItemType = {
 }
 
 
-const getProducts = async (): Promise<CartItemType[]> =>  
-  await (await fetch("https://fakestoreapi.com/products")).json();
+// const getProducts = async (): Promise<CartItemType[]> =>  
+//   await (await fetch("https://fakestoreapi.com/products")).json();
 
 
 const App = () => {
@@ -40,30 +40,31 @@ const App = () => {
   items.reduce((ack:number, item) => ack + item.amount, 0);
 
   const handleAddToCart = (clickedItem: CartItemType) => {
-    setCartItems(prev => {
+    setCartItems(prevState => {
       //1. Is item already in the cart
-      const isItemInCart = prev.find(item => item.id === clickedItem.id );
+      const isItemInCart = prevState.find(item => item.id === clickedItem.id );
 
       if(isItemInCart){
-        return prev.map( item => 
+        return prevState.map( item => 
           item.id === clickedItem.id 
           ? {...item, amount: item.amount + 1 }
           : item
           );
       }
 
-      //First time the item is added
-      return[ ...prev, { ...clickedItem, amount: 1 } ]
+      //2. First time the item is added
+      return [ ...prevState, { ...clickedItem, amount: 1 } ]
 
     })
   };
   
   const handleRemoveFromCart = (id: number) =>{
-    setCartItems(prev =>(
-      prev.reduce((ack, item) =>{
+    setCartItems(prevState =>(
+      prevState.reduce((ack, item) =>{
         if(item.id === id){
           //remove item from cart if item.amount === 1
-          if(item.amount === 1) return ack;
+          // return ack will return undefined which is false
+          if(item.amount === 1) return ack; 
           return [ ...ack, { ...item, amount: item.amount - 1 } ];
         }else{
           return [  ...ack, item ];
@@ -71,7 +72,7 @@ const App = () => {
 
       }, [] as CartItemType[])
     ))
-  };
+  }; 
 
   if(isLoading) return <LinearProgress data-testid="loading"/>;
   if(isError) return <div data-testid="error">Something went wrong... </div>;
